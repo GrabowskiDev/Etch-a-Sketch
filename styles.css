@@ -1,0 +1,36 @@
+.center {
+    text-align: center;
+}
+
+.mainBox {
+    
+    height: 512px;
+    width: 512px;
+    border: 3px solid black;
+    border-radius: 3px;
+    margin: auto;
+
+
+}
+
+.buttons {
+    width: 516.8px;
+
+    margin: auto;
+    margin-top: 10px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons * {
+    width: 196.8px;
+    padding: 0;
+    border: 2px solid black;
+    font-size: 25px;
+}
+
+.buttons button {
+    width: 200px;
+    height: 50px;
+}
