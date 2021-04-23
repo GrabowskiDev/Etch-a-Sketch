@@ -1,10 +1,9 @@
-//Query Selectors
-const mainBox = document.querySelector('.mainBox');
-const makeGridButton = document.querySelector('#newGridButton');
-
 //Initial values
-let childBoxes;
 let hexColor;
+
+let r;
+let g;
+let b;
 
 //Make a container with 16x16 squares (divs)(grid)  
 function makeGrid(gridNum) {
@@ -21,15 +20,11 @@ function makeGrid(gridNum) {
         mainBox.appendChild(childBox);
     }
     //Declare new nodelist everytime new grid is made
-    declareNewChildBoxes();
+    //declareNewChildBoxes();
+    //childBoxes = document.querySelectorAll('.box');
 }
 
-//Button that will make new grid of squares (AxA)
-makeGridButton.addEventListener('click', () => {
-    //Prompt will ask for a value
-    //This value will then be send to making container function
-    makeGrid(prompt("Enter how many boxes in each row"));
-});
+
 
 //Declare new child boxes function
 function declareNewChildBoxes() {
@@ -49,9 +44,9 @@ function getRandomInt(min, max) {
 //Convert Hex values to RGB values
 function hexToRgb(hex) {
     var bigint = parseInt(hex, 16);
-    var r = (bigint >> 16) & 255;
-    var g = (bigint >> 8) & 255;
-    var b = bigint & 255;
+    r = (bigint >> 16) & 255;
+    g = (bigint >> 8) & 255;
+    b = bigint & 255;
 
     return r + "," + g + "," + b;
 }
@@ -72,21 +67,35 @@ function applyMesh(div) {
     div.style.backgroundColor = `rgb(${newR}, ${newG}, ${newB})`;
 }
 
-//user will pick a color, whether in hex or rgb
-////user will pick a color by typing it in a box.
-function search(ele) {
-    if(event.key === 'Enter') {
-        hexColor = ele.value;        
+//user will pick a hex color by typing it in a box.
+function color(ele) {
+    if(event.key === 'Enter') { 
+        hexToRgb(ele.value.slice(1));
+        alert(`${r}, ${g}, ${b}`);
     }
 }
 
-//Change the color to random variation of color on hover
-
-
-
-
-
+//Query Selectors
+const mainBox = document.querySelector('.mainBox');
+const makeGridButton = document.querySelector('#newGridButton');
 
 
 //On start of page, make grid 16x16
 makeGrid(16);
+
+const childBoxes = document.querySelectorAll('.box');
+
+//Change the color to random variation of color on hover
+childBoxes.forEach((div) => {
+    div.addEventListener('mouseover', () => {
+        applyMesh(div);
+        //alert("l");
+    });
+});
+
+//Button that will make new grid of squares (AxA)
+makeGridButton.addEventListener('click', () => {
+    //Prompt will ask for a value
+    //This value will then be send to making container function
+    makeGrid(prompt("Enter how many boxes in each row"));
+});
