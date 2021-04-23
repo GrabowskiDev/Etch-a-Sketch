@@ -1,5 +1,7 @@
 //Query Selectors
 const mainBox = document.querySelector('.mainBox');
+const makeGridButton = document.querySelector('#newGridButton');
+
 
 //Make a container with 16x16 squares (divs)(grid)  
 function makeGrid(gridNum) {
@@ -25,8 +27,11 @@ function makeGrid(gridNum) {
     //each value by random number in range from x to y
     
 //Button that will make new grid of squares (AxA)
+makeGridButton.addEventListener('click', () => {
     //Prompt will ask for a value
     //This value will then be send to making container function
+    makeGrid(prompt("Enter how many boxes in each row"));
+});
 
 //On start of page, make grid 16x16
 makeGrid(16);
