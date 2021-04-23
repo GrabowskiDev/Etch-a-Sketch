@@ -20,17 +20,8 @@ function makeGrid(gridNum) {
         mainBox.appendChild(childBox);
     }
     //Declare new nodelist everytime new grid is made
-    //declareNewChildBoxes();
-    //childBoxes = document.querySelectorAll('.box');
+    mainBoxAddEventListener();
 }
-
-
-
-//Declare new child boxes function
-function declareNewChildBoxes() {
-    childBoxes = document.querySelectorAll('.box');
-}
-
 
 /*                  Mesh Pattern                    */
 
@@ -71,7 +62,6 @@ function applyMesh(div) {
 function color(ele) {
     if(event.key === 'Enter') { 
         hexToRgb(ele.value.slice(1));
-        alert(`${r}, ${g}, ${b}`);
     }
 }
 
@@ -83,15 +73,15 @@ const makeGridButton = document.querySelector('#newGridButton');
 //On start of page, make grid 16x16
 makeGrid(16);
 
-const childBoxes = document.querySelectorAll('.box');
-
-//Change the color to random variation of color on hover
-childBoxes.forEach((div) => {
-    div.addEventListener('mouseover', () => {
-        applyMesh(div);
-        //alert("l");
+//Add event listener to every child of mainBox
+function mainBoxAddEventListener() {
+    mainBox.childNodes.forEach((div) => {
+        div.addEventListener('mouseover', () => {
+            //if mouse is over, apply mesh
+            applyMesh(div);
+        });
     });
-});
+}
 
 //Button that will make new grid of squares (AxA)
 makeGridButton.addEventListener('click', () => {
