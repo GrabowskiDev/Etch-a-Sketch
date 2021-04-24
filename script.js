@@ -114,6 +114,5 @@ function makeGradientTitle() {
     }
     //we make gradient with colors on string
     title.style.background = `linear-gradient(to right${gradientColors})`;
-    title.style.color = 'transparent';
     title.style.backgroundClip = 'text';
 }
