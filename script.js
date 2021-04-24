@@ -62,12 +62,14 @@ function applyMesh(div) {
 function color(ele) {
     if(event.key === 'Enter') { 
         hexToRgb(ele.value.slice(1));
+        makeGradientTitle();
     }
 }
 
 //Query Selectors
 const mainBox = document.querySelector('.mainBox');
 const makeGridButton = document.querySelector('#newGridButton');
+const title = document.querySelector('.title');
 
 
 //On start of page, make grid 16x16
@@ -89,3 +91,22 @@ makeGridButton.addEventListener('click', () => {
     //This value will then be send to making container function
     makeGrid(prompt("Enter how many boxes in each row"));
 });
+
+//Title gradient created from given color
+function makeGradientTitle() {
+    //We remove any colors from gradient
+    let gradientColors = "";
+    //We want to repeat it 5 times
+    for(i=0; i<5; i++) {
+        //We random each color
+        newR = randomColor(r);
+        newG = randomColor(g);
+        newB = randomColor(b);
+        //we add that to our string
+        gradientColors += `, rgb(${newR}, ${newG}, ${newB})`;
+    }
+    //we make gradient with colors on string
+    title.style.background = `linear-gradient(to right${gradientColors})`;
+    title.style.color = 'transparent';
+    title.style.backgroundClip = 'text';
+}

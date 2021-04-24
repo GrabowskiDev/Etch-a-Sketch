@@ -1,5 +1,8 @@
-.center {
+.title {
     text-align: center;
+    font-family: 'Courgette', cursive;
+    font-size: 58px;
+    margin: 15px;
 }
 
 .mainBox {
@@ -37,4 +40,15 @@
 
 .box {
     border: 1px solid black;
+}
+
+.rainbow-lr {
+    background: linear-gradient(to right, red, orange , yellow, green, cyan, blue, violet);
+    color:transparent;
+    background-clip: text;
+}
+
+.titleBox {
+    display: flex;
+    justify-content: center;
 }
