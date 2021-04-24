@@ -58,11 +58,17 @@ function applyMesh(div) {
     div.style.backgroundColor = `rgb(${newR}, ${newG}, ${newB})`;
 }
 
+//Changing background input color box to current color
+function changeInputBoxColor(color) {
+    colorBox.style.backgroundColor = color;
+}
+
 //user will pick a hex color by typing it in a box.
 function color(ele) {
     if(event.key === 'Enter') { 
         hexToRgb(ele.value.slice(1));
         makeGradientTitle();
+        changeInputBoxColor(ele.value);
     }
 }
 
@@ -70,6 +76,7 @@ function color(ele) {
 const mainBox = document.querySelector('.mainBox');
 const makeGridButton = document.querySelector('#newGridButton');
 const title = document.querySelector('.title');
+const colorBox = document.querySelector('#colorInput');
 
 
 //On start of page, make grid 16x16

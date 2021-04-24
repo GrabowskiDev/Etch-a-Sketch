@@ -55,3 +55,8 @@
     display: flex;
     justify-content: center;
 }
+
+#colorInput {
+    -webkit-text-stroke-width: 0.8px;
+    -webkit-text-stroke-color: white;
+}
