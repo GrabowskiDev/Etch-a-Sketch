@@ -42,18 +42,18 @@ function hexToRgb(hex) {
     return r + "," + g + "," + b;
 }
 
-//Random mesh pattern for given color
-function randomColor(color) {
-    if(color>20) color=color+getRandomInt(-20,20);
-    else color=color+getRandomInt(-color,40-color);
+//Random mesh pattern for given color, with given range of mesh
+function randomColor(color, range) {
+    if(color>range) color=color+getRandomInt(-range,range);
+    else color=color+getRandomInt(-color,range*2-color);
     return color;
 }
 
 //Applying mesh color to given div
 function applyMesh(div) {
-    newR = randomColor(r);
-    newG = randomColor(g);
-    newB = randomColor(b);
+    newR = randomColor(r,20);
+    newG = randomColor(g,20);
+    newB = randomColor(b,20);
     
     div.style.backgroundColor = `rgb(${newR}, ${newG}, ${newB})`;
 }
@@ -99,9 +99,9 @@ function makeGradientTitle() {
     //We want to repeat it 5 times
     for(i=0; i<5; i++) {
         //We random each color
-        newR = randomColor(r);
-        newG = randomColor(g);
-        newB = randomColor(b);
+        newR = randomColor(r,40);
+        newG = randomColor(g,40);
+        newB = randomColor(b,40);
         //we add that to our string
         gradientColors += `, rgb(${newR}, ${newG}, ${newB})`;
     }
