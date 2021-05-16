@@ -1,8 +1,11 @@
 //Initial values
 let hexColor;
+let hsl = {};
 
 //Make a container with 16x16 squares (divs)(grid)  
 function makeGrid(gridNum) {
+    if(isNaN(gridNum) || gridNum<=0 || gridNum>128) return alert('Please input a number in range 1-128');
+
     //Clear already existing grid
     mainBox.innerHTML = '';
     //The script will add a choosen number of divs to
@@ -127,7 +130,7 @@ function mainBoxAddEventListener() {
 
 //Button that will make new grid of squares (AxA)
 makeGridButton.addEventListener('click', () => {
-    makeGrid(prompt("Enter how many boxes in each row"));
+    makeGrid(parseInt(prompt("Enter how many boxes in each row")));
 });
 
 //Title gradient created from given color
