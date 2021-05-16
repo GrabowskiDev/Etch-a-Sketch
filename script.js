@@ -78,11 +78,11 @@ function HEXtoHSL(hex) {
     };
 }
 
-//Random mesh pattern for given color, with given range of mesh
-function randomValue(color, range) {
-    if(color>range) color=color+getRandomInt(-range,range);
-    else color=color+getRandomInt(-color,range*2-color);
-    return color;
+//Random value with given range not greater than 100 or worse than 0
+function randomValue(value, range) {
+    if(value+range>100) return value + getRandomInt((-range*2)+(100-value), 100-value);
+    if(value<range) return value + getRandomInt(-value, range*2-value);
+    return value + getRandomInt(-range, range);
 }
 
 //Applying mesh color to given div
