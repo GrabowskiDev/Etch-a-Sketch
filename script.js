@@ -1,9 +1,15 @@
 //Initial values
 let hexColor;
 
+//RGB variables
 let r;
 let g;
 let b;
+
+//HSL variables
+let h;
+let s;
+let l;
 
 //Make a container with 16x16 squares (divs)(grid)  
 function makeGrid(gridNum) {
@@ -42,6 +48,56 @@ function hexToRgb(hex) {
     return r + "," + g + "," + b;
 }
 
+//Convert Hex to HSL
+function HEXtoHSL(hex) {
+    hex = hex.replace(/#/g, '');
+    if (hex.length === 3) {
+        hex = hex.split('').map(function (hex) {
+            return hex + hex;
+        }).join('');
+    }
+    var result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})[\da-z]{0,0}$/i.exec(hex);
+    if (!result) {
+        return null;
+    }
+    var r = parseInt(result[1], 16);
+    var g = parseInt(result[2], 16);
+    var b = parseInt(result[3], 16);
+    r /= 255, g /= 255, b /= 255;
+    var max = Math.max(r, g, b),
+        min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+    if (max == min) {
+        h = s = 0;
+    } else {
+        var d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+        case r:
+            h = (g - b) / d + (g < b ? 6 : 0);
+            break;
+        case g:
+            h = (b - r) / d + 2;
+            break;
+        case b:
+            h = (r - g) / d + 4;
+            break;
+        }
+        h /= 6;
+    }
+    s = s * 100;
+    s = Math.round(s);
+    l = l * 100;
+    l = Math.round(l);
+    h = Math.round(360 * h);
+
+    return {
+        h: h,
+        s: s,
+        l: l
+    };
+}
+
 //Random mesh pattern for given color, with given range of mesh
 function randomColor(color, range) {
     if(color>range) color=color+getRandomInt(-range,range);
@@ -51,11 +107,9 @@ function randomColor(color, range) {
 
 //Applying mesh color to given div
 function applyMesh(div) {
-    newR = randomColor(r,20);
-    newG = randomColor(g,20);
-    newB = randomColor(b,20);
+    newL = randomColor(l, 10);
     
-    div.style.backgroundColor = `rgb(${newR}, ${newG}, ${newB})`;
+    div.style.backgroundColor = `hsl(${h}, ${s}%, ${newL}%)`;
 }
 
 //Changing background input color box to current color
@@ -66,6 +120,11 @@ function changeInputBoxColor(color) {
 //user will pick a hex color by typing it in a box.
 function color(ele) {
     if(event.key === 'Enter') { 
+        hsl = HEXtoHSL(ele.value);
+        h = hsl.h;
+        s = hsl.s;
+        l = hsl.l;
+
         hexToRgb(ele.value.slice(1));
         makeGradientTitle();
         changeInputBoxColor(ele.value);
@@ -105,12 +164,9 @@ function makeGradientTitle() {
     let gradientColors = "";
     //We want to repeat it 5 times
     for(i=0; i<5; i++) {
-        //We random each color
-        newR = randomColor(r,40);
-        newG = randomColor(g,40);
-        newB = randomColor(b,40);
+        newL = randomColor(l, 10);
         //we add that to our string
-        gradientColors += `, rgb(${newR}, ${newG}, ${newB})`;
+        gradientColors += `, hsl(${h}, ${s}%, ${newL}%)`;
     }
     //we make gradient with colors on string
     //title.style.background = `linear-gradient(to right${gradientcolors})`;
