@@ -1,16 +1,6 @@
 //Initial values
 let hexColor;
 
-//RGB variables
-let r;
-let g;
-let b;
-
-//HSL variables
-let h;
-let s;
-let l;
-
 //Make a container with 16x16 squares (divs)(grid)  
 function makeGrid(gridNum) {
     //Clear already existing grid
@@ -36,16 +26,6 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-//Convert Hex values to RGB values
-function hexToRgb(hex) {
-    var bigint = parseInt(hex, 16);
-    r = (bigint >> 16) & 255;
-    g = (bigint >> 8) & 255;
-    b = bigint & 255;
-
-    return r + "," + g + "," + b;
 }
 
 //Convert Hex to HSL
@@ -99,7 +79,7 @@ function HEXtoHSL(hex) {
 }
 
 //Random mesh pattern for given color, with given range of mesh
-function randomColor(color, range) {
+function randomValue(color, range) {
     if(color>range) color=color+getRandomInt(-range,range);
     else color=color+getRandomInt(-color,range*2-color);
     return color;
@@ -107,9 +87,8 @@ function randomColor(color, range) {
 
 //Applying mesh color to given div
 function applyMesh(div) {
-    newL = randomColor(l, 10);
-    
-    div.style.backgroundColor = `hsl(${h}, ${s}%, ${newL}%)`;
+    newL = randomValue(hsl.l, 10);
+    div.style.backgroundColor = `hsl(${hsl.h}, ${hsl.s}%, ${newL}%)`;
 }
 
 //Changing background input color box to current color
@@ -121,11 +100,6 @@ function changeInputBoxColor(color) {
 function color(ele) {
     if(event.key === 'Enter') { 
         hsl = HEXtoHSL(ele.value);
-        h = hsl.h;
-        s = hsl.s;
-        l = hsl.l;
-
-        hexToRgb(ele.value.slice(1));
         makeGradientTitle();
         changeInputBoxColor(ele.value);
     }
@@ -153,8 +127,6 @@ function mainBoxAddEventListener() {
 
 //Button that will make new grid of squares (AxA)
 makeGridButton.addEventListener('click', () => {
-    //Prompt will ask for a value
-    //This value will then be send to making container function
     makeGrid(prompt("Enter how many boxes in each row"));
 });
 
@@ -162,14 +134,12 @@ makeGridButton.addEventListener('click', () => {
 function makeGradientTitle() {
     //We remove any colors from gradient
     let gradientColors = "";
-    //We want to repeat it 5 times
     for(i=0; i<5; i++) {
-        newL = randomColor(l, 10);
+        newL = randomValue(hsl.l, 13);
         //we add that to our string
-        gradientColors += `, hsl(${h}, ${s}%, ${newL}%)`;
+        gradientColors += `, hsl(${hsl.h}, ${hsl.s}%, ${newL}%)`;
     }
     //we make gradient with colors on string
-    //title.style.background = `linear-gradient(to right${gradientcolors})`;
     title.style.cssText = `background: linear-gradient(to right${gradientColors});
     background-clip: text;
     -webkit-background-clip: text;
